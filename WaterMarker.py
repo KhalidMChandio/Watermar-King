@@ -397,7 +397,7 @@ class WaterMarker():
         engine = pyttsx3.init()
         rate = engine.getProperty('rate')
         engine.setProperty('rate', rate-100)
-        voices = engine.getProperty('voices')
+        voices = engine.getProperty('voices') 
         #for voice in voices: 
         #    print(f'voice: {voice.name}')
         
