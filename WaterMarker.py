@@ -398,7 +398,7 @@ class WaterMarker():
         rate = engine.getProperty('rate')
         engine.setProperty('rate', rate-100)
         voices = engine.getProperty('voices')
-        #for voice in voices:
+        #for voice in voices: 
         #    print(f'voice: {voice.name}')
         
         # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
