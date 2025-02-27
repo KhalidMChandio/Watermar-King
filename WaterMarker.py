@@ -12,21 +12,26 @@ import WaterMark
 
 
 class WaterMarker():
-    """ Class to watermark images, PDFs, videos and audios """
-
+    """ 
+    Class to watermark images, PDFs, videos and audios 
     
+    """
         
     def _getBlankWaterMarkImage(self,img, text_to_write: str="Watermark this image"):
+        
         """
-        Function returns watermarked blank image for further blending.
-        
-        :param img: CV2 image which needs to be watermarked. This is used to get width & height of the image only.
-        
-        :param text_to_write: Text to be used as watermark  
+        :Private Function:
 
-        
+        Creates a blank image with watermark text placed at specified intervals.
+
+        This function generates a blank image of the same size as the input image, with the given
+        text written as a watermark across multiple lines at specified vertical positions.
+
+        :param img: The input image from which dimensions are derived for the blank watermark image.
+        :param text_to_write: The watermark text to be placed on the blank image. Default is "Watermark this image".
+        :return: A blank image with the watermark text applied, with colors inverted for visibility.
+
         """
-        
         #Get size of image
         img_width, img_height = img.shape[1], img.shape[0]
         
@@ -57,50 +62,15 @@ class WaterMarker():
         #M=cv2.getRotationMatrix2D(text_location,angle,1)
         #out=cv2.warpAffine(blank,M,(img_width, img_height))
         
-        # Convert 0s to 1s and 1s to 0s to invert colors black and white
+        # Convert 0s to 1s and 1s to 0s to invert colors black and white for readability
         out=cv2.bitwise_not(blank)
         return out
 
-    
-    # Converts image to watermarked image and returns Watermarked image
-    def WaterMarkImage(self, img: bytes, text_to_write: str, extension: str="JPG") -> BytesIO:
-        '''
-        Functions returns watermarked image with blend.
-        
-        :param img: bytes of image object which needs to be watermarked.
-        
-        ::
-
-            img = cur.execute(qryArch, param).fetchval()
-        
-        :param text_to_write: Text to be used as watermark  
-        
-        :param extension: The extension of the img format which can be JPG, JPEG or PNG
-        
-        '''
-        nparr = np.fromstring(img, np.uint8)
-        given_image=cv2.imdecode(nparr, cv2.IMREAD_COLOR)
-        imgWM = self._getBlankWaterMarkImage(given_image, text_to_write)
-        
-        blend = cv2.addWeighted(src1=given_image, alpha=0.7, src2=imgWM, beta=0.3,gamma=0.5)
-        
-        if(extension=='jpg' or extension=='jpeg'):
-            is_success, buffer = cv2.imencode(".jpg", blend)
-        elif (extension=='png'):
-            is_success, buffer = cv2.imencode(".png", blend)
-        else:
-            is_success = False
-            raise ValueError('Extension can only be jpeg, jpg or png.')
-        if is_success:
-            decode_image=BytesIO(buffer)
-            return decode_image
-        else:
-            return img
-    
-    
-    # Converts image to watermarked image and returns Watermarked image
+   
+    # Converts PNG image to watermarked image and returns Watermarked image
     def WaterMark_PNG(self, img: bytes, text_to_write: str) -> BytesIO:
-        '''
+        
+        """
         Functions returns watermarked image with blend.
         
         :param img: bytes of image object which needs to be watermarked.
@@ -113,7 +83,7 @@ class WaterMarker():
         
         :param extension: The extension of the img format which can be JPG, JPEG or PNG
         
-        '''
+        """
         nparr = np.fromstring(img, np.uint8)
         given_image=cv2.imdecode(nparr, cv2.IMREAD_COLOR)
         imgWM = self._getBlankWaterMarkImage(given_image, text_to_write)
@@ -129,7 +99,7 @@ class WaterMarker():
             return img
         
     
-    # Converts image to watermarked image and returns Watermarked image
+    # Converts TIFF image to watermarked image and returns Watermarked image
     def WaterMark_TIFF(self, img: bytes, text_to_write: str) -> BytesIO:
         '''
         Functions returns watermarked image with blend.
@@ -160,7 +130,7 @@ class WaterMarker():
             return img
         
     
-    # Converts image to watermarked image and returns Watermarked image
+    # Converts JPG image to watermarked image and returns Watermarked image
     def WaterMark_JPEG(self, img: bytes, text_to_write: str) -> BytesIO:
         '''
         Functions returns watermarked image with blend.
@@ -192,7 +162,7 @@ class WaterMarker():
 
         # IN USE
     
-    # Converts image to watermarked image and returns Watermarked image
+    # Converts BMP image to watermarked image and returns Watermarked image
     def WaterMark_BMP(self, img: bytes, text_to_write: str) -> BytesIO:
         '''
         Functions returns watermarked image with blend.
@@ -222,8 +192,8 @@ class WaterMarker():
         else:
             return img
     
-    #Uses Moviepy and ImageMagick to generate watermarked Video
-    def WaterMarkVideo(self, video: bytes, text_to_write: str="WaterMark", extension: str="mp4") -> BytesIO:
+    #Uses Moviepy to generate watermarked Video
+    def WaterMark_Video(self, video: bytes, text_to_write: str="WaterMark", extension: str="mp4") -> BytesIO:
         '''
         Functions returns watermarked video.
         
@@ -231,7 +201,7 @@ class WaterMarker():
         
         :param text_to_write: Text to be used as watermark.
 
-        :param extension: The extension to determine the video file format.
+        :param extension: The extension to determine the video file format. These can be mp4, avi, ogv, webm.
         
         '''
         
@@ -270,7 +240,7 @@ class WaterMarker():
             return BytesIO(cont)
     
     # Method using pdfium to return watermarked PDF
-    def WaterMarakPDF_pdfium(self, pdf: bytes, text_to_write: str) -> bytes:
+    def WaterMark_PDF(self, pdf: bytes, text_to_write: str) -> BytesIO:
         '''
         Functions uses pdfium to create and return watermarked PDF file.
         
@@ -305,7 +275,7 @@ class WaterMarker():
             bio=BytesIO()
             bio = img_byte_arr.getvalue()
             # send image for watermarking
-            wmImage = self.WaterMarkImage(img=bio,text_to_write=text_to_write, extension="jpg")
+            wmImage = self.WaterMark_JPEG(img=bio,text_to_write=text_to_write)
             # now wmImage has our watermarked image
             # create new pdfBitmap image to be included in pdNew
             image = pdfium.PdfImage.new(pdNew)
@@ -327,71 +297,17 @@ class WaterMarker():
         # Save new pdf to memory and return 
         ret = BytesIO()
         pdNew.save(ret)
-        return ret.getvalue()
-
-    # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
-    def WaterMarkAudio(self, audio: bytes, text_to_write: str, extension: str="wav") -> BytesIO:
-        '''
-        Function creates a wav file with text to speech, overlays it with original audio and returns overlayed file
-
-        :param audio: Retrived bytes of audio file as retrieved from read() function from database.
-        
-        :param text_to_write: The text required to be spoken by bot and watermarked in audio file.
-
-        :param extension: The extension/type of data being submitted as audio.
-        '''
-        # Create wave audio clip for overlaying
-        engine = pyttsx3.init()
-        rate = engine.getProperty('rate')
-        engine.setProperty('rate', rate-100)
-        voices = engine.getProperty('voices')
-        #for voice in voices:
-        #    print(f'voice: {voice.name}')
-        
-        # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
-        engine.setProperty('voice', voices[28].id)
-        # Save created clip as tempory file and load into audWM
-        with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="Arch_") as wm:
-            if extension == "wav":
-                engine.save_to_file(text=text_to_write, filename=wm.name+".wav")
-            elif extension == "mp3":
-                engine.save_to_file(text=text_to_write, filename=wm.name+".mp3")
-            
-            engine.runAndWait()
-            if extension == "wav":
-                audWM = AudioSegment.from_wav(wm.name+".wav")
-            elif extension == "mp3":
-                audWM = AudioSegment.from_mp3(wm.name+".mp3")
-            # audio is a raw data so save it to temporary file, as pydub accepts file from disk only.
-            with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_") as org:
-                org.write(audio)
-                # load file to audOrigin; the original file
-                try:
-                    audOrigin = AudioSegment.from_file(file=org.name, format= extension)
-                except:
-                    audOrigin = AudioSegment.from_file(file=org.name, format= "mp3")
-                # overlay both clips
-                clip: AudioSegment = audOrigin.overlay(audWM)
-                
-                # save the newly created clip to temporary file for opening and exporting
-                with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_", suffix="."+extension) as f:
-                    print(f.name)
-                    clip.export(f.name,format=extension)
-                    # open saved file and return buffer as BytesIO
-                    with open(f.name,"rb") as retFile:
-                        buffer = retFile.read()
-                        return BytesIO(buffer)
+        return BytesIO(ret.getvalue())
 
     # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
     def WaterMark_WAV(self, audio: bytes, text_to_write: str) -> BytesIO:
         """
-        Function creates a wav file with text to speech, overlays it with original audio and returns overlayed file
+        Creates a wav file with text to speech, overlays it with original audio and returns overlayed file
 
         :param audio: Retrived bytes of audio file as retrieved from read() function from database.
         
         :param text_to_write: The text required to be spoken by bot and watermarked in audio file.
-
-        :param extension: The extension/type of data being submitted as audio.
+        
         """
         # Create wave audio clip for overlaying
         engine = pyttsx3.init()
@@ -436,8 +352,7 @@ class WaterMarker():
         :param audio: Retrived bytes of audio file as retrieved from read() function from database.
         
         :param text_to_write: The text required to be spoken by bot and watermarked in audio file.
-
-        :param extension: The extension/type of data being submitted as audio.
+        
         '''
         # Create wave audio clip for overlaying
         engine = pyttsx3.init()

@@ -2,6 +2,17 @@ import cv2
 
 class WaterMark():
     def __init__(self, width:int=0, height:int=0, text_to_write:str="watermark"):
+        """
+        Initializes the WaterMark object with the given dimensions and text.
+
+        :param width: The width of the image where watermark will be applied.
+        :param height: The height of the image where watermark will be applied.
+        :param text_to_write: The text to be used as the watermark.
+
+        This constructor sets the default font, calculates the appropriate font size and thickness
+        based on the image width, and determines the position for centering the watermark text.
+        """
+
         self.image_width = width
         self.image_height = height
         self.text_to_write = text_to_write

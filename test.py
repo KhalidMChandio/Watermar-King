@@ -1,13 +1,22 @@
-from io import BytesIO
 import WaterMarker, os
-from PIL import Image
-
 
 
 def create_foler():
     if not os.path.exists("output"):
         os.makedirs("output")
 
+
+def watermark_pdf(img, text_to_write, file_name):
+    wm = WaterMarker.WaterMarker()
+    create_foler()
+    file_name = os.path.join(os.getcwd(), "output", file_name) 
+    with open(img, "rb") as image:
+        f = image.read()
+        b = bytearray(f)
+        out = wm.WaterMark_PDF(bytes(b), text_to_write=text_to_write)
+        with open(file_name, "wb") as f:
+            f.write(out.getbuffer())
+    print("PDF file created")
 
 def watermark_jpeg(img, text_to_write, file_name):
     wm = WaterMarker.WaterMarker()
@@ -64,7 +73,7 @@ def watermark_video(video, text_to_write, file_name):
     with open(video, "rb") as vid:
         f = vid.read()
         b = bytearray(f)
-        out = wm.WaterMarkVideo(bytes(b), text_to_write=text_to_write, extension="mp4")
+        out = wm.WaterMark_Video(bytes(b), text_to_write=text_to_write, extension="mp4")
         with open(file_name, "wb") as f:
             f.write(out.getbuffer())            
     print("MP4 file created")
@@ -94,10 +103,11 @@ def watermark_wav(audio, text_to_write, file_name):
     print ("WAV file created")
 
 if __name__ == "__main__":
-    watermark_jpeg("sample_jpeg.jpg", "Watermarking this image", "output_jpeg.jpg")    
-    watermark_png("sample_png.png", "Watermarking this image", "output_png.png")
-    watermark_tiff("sample_tiff.tiff", "Watermarking this image", "output_tiff.tiff")
-    watermark_bmp("sample_bmp.bmp", "Watermarking this image", "output_bmp.bmp")
-    watermark_mp3("sample_mp3.mp3", "Watermarking this Audio", "output_mp3.mp3")
-    watermark_wav("sample_wav.wav", "Watermarking this Audio", "output_wav.wav")
-    watermark_video("sample_mp4.mp4", "Watermarking this video", "output_mp4.mp4")
+    watermark_pdf("sample_pdf.pdf", "Watermarking this PDF", "output_pdf.pdf")
+    watermark_jpeg("sample_jpeg.jpg", "Watermarking this JPEG", "output_jpeg.jpg")    
+    watermark_png("sample_png.png", "Watermarking this PNG", "output_png.png")
+    watermark_tiff("sample_tiff.tiff", "Watermarking this TIFF", "output_tiff.tiff")
+    watermark_bmp("sample_bmp.bmp", "Watermarking this BMP", "output_bmp.bmp")
+    watermark_mp3("sample_mp3.mp3", "Watermarking this MP3", "output_mp3.mp3")
+    watermark_wav("sample_wav.wav", "Watermarking this WAV", "output_wav.wav")
+    watermark_video("sample_mp4.mp4", "Watermarking this MP4", "output_mp4.mp4")
