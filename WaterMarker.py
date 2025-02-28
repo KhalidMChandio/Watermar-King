@@ -310,10 +310,12 @@ class WaterMarker():
         
         """
         # Create wave audio clip for overlaying
+        
         engine = pyttsx3.init()
         rate = engine.getProperty('rate')
         engine.setProperty('rate', rate-100)
         voices = engine.getProperty('voices') 
+        # Uncomment the following lines to see all the available voices
         #for voice in voices: 
         #    print(f'voice: {voice.name}')
         
@@ -333,16 +335,61 @@ class WaterMarker():
                 audOrigin = AudioSegment.from_file(file=org.name, format= "wav")
                 
                 # overlay both clips
-                clip: AudioSegment = audOrigin.overlay(audWM)
+                clip: AudioSegment = audOrigin.overlay(audWM,loop=1)
                 
                 # save the newly created clip to temporary file for opening and exporting
                 with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_", suffix="."+"wav") as f:
-                    print(f.name)
                     clip.export(f.name,format="wav")
                     # open saved file and return buffer as BytesIO
                     with open(f.name,"rb") as retFile:
                         buffer = retFile.read()
                         return BytesIO(buffer)
+
+    def WaterMark_OGG(self, audio: bytes, text_to_write: str) -> BytesIO:
+        """
+        Creates a wav file with text to speech, overlays it with original audio and returns overlayed file
+
+        :param audio: Retrived bytes of audio file as retrieved from read() function from database.
+        
+        :param text_to_write: The text required to be spoken by bot and watermarked in audio file.
+        
+        """
+        # Create wave audio clip for overlaying
+        
+        engine = pyttsx3.init()
+        rate = engine.getProperty('rate')
+        engine.setProperty('rate', rate-100)
+        voices = engine.getProperty('voices') 
+        # Uncomment the following lines to see all the available voices
+        #for voice in voices: 
+        #    print(f'voice: {voice.name}')
+        
+        # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
+        engine.setProperty('voice', voices[28].id)
+        # Save created clip as tempory file and load into audWM
+        with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="Arch_") as wm:
+            engine.save_to_file(text=text_to_write, filename=wm.name+".wav")
+            
+            engine.runAndWait()
+            audWM = AudioSegment.from_wav(wm.name+".wav")
+            
+            # audio is a raw data so save it to temporary file, as pydub accepts file from disk only.
+            with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_") as org:
+                org.write(audio)
+                # load file to audOrigin; the original file
+                audOrigin = AudioSegment.from_ogg(file=org.name)
+                
+                # overlay both clips
+                clip: AudioSegment = audOrigin.overlay(audWM,loop=1)
+                
+                # save the newly created clip to temporary file for opening and exporting
+                with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_", suffix="."+"ogg") as f:
+                    clip.export(f.name,format="ogg")
+                    # open saved file and return buffer as BytesIO
+                    with open(f.name,"rb") as retFile:
+                        buffer = retFile.read()
+                        return BytesIO(buffer)
+
 
     # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
     def WaterMark_MP3(self, audio: bytes, text_to_write: str) -> BytesIO:
@@ -383,7 +430,6 @@ class WaterMarker():
                 
                 # save the newly created clip to temporary file for opening and exporting
                 with tempfile.NamedTemporaryFile(mode="w+b", delete=False, prefix="Arch_", suffix="."+"mp3") as f:
-                    print(f.name)
                     clip.export(f.name,format="mp3")
                     # open saved file and return buffer as BytesIO
                     with open(f.name,"rb") as retFile:
