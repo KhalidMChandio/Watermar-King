@@ -1,7 +1,7 @@
 
 # WaterMarker
 
-Watermark images (JPG, PNG, TIFF, BMP), PDFs, Video (MP4, AVI, OGV, WEBM) and even Audio(MP3, WAV) files.
+Watermark images (JPG, PNG, TIFF, BMP), PDFs, Video (MP4, AVI, OGV, WEBM) and even Audio(MP3, WAV, OGG) files.
 
 Many security concious organizations do not want their employees to share sensitive documents, images, videos, audios etc. with unauthorized personnel. In order to prevent this, such data is required to be watermarked before being displayed to the employees. This utility is specially designed for such purpose and suitable for such purpose only; as it affects the quality of the images assuming the given scenario.
 

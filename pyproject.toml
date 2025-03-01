@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "WaterMarker"
+name = "watermar_king"
 version = "1.0.0"
 dependencies = [
     "certifi==2025.1.31",
@@ -44,8 +44,5 @@ classifiers = [
 [project.urls]
 Homepage = "https://github.com/KhalidMChandio/WaterMarker"
 
-[project.scripts]
-ssay = "snakesay.__main__:main"
-
 [tool.setuptools.packages.find]
-where = ["."]
+where = ["src"]

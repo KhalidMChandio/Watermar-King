@@ -1,4 +1,4 @@
-from src.WaterMarker import WaterMarker
+from src.watermar_king import WaterMarker
 import  os
 
 
