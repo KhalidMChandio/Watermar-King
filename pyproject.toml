@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "WaterMarker"
+version = "1.0.0"
+dependencies = ["rich"]
+authors = [{name = "Khalid M. Chandio", email = "man.of.honour@gmail.com"}]
+keywords = ["watermark","watermarker", "watermarking"]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.9"
+description = "Watermark Images, PDFs, Videos and Audios"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+
+[project.urls]
+Homepage = "https://github.com/KhalidMChandio/WaterMarker"
+
+[project.scripts]
+ssay = "snakesay.__main__:main"
+
+[tool.setuptools.packages.find]
+where = ["."]

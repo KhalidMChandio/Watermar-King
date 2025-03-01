@@ -1,4 +1,5 @@
-import WaterMarker, os
+from src.WaterMarker import WaterMarker
+import  os
 
 
 def create_foler():
@@ -116,12 +117,12 @@ def watermark_ogg(audio, text_to_write, file_name):
 
 
 if __name__ == "__main__":
-    watermark_pdf("sample_pdf.pdf", "Watermarking this PDF image", "output_pdf.pdf")
-    watermark_jpeg("sample_jpeg.jpg", "Watermarking this JPEG image", "output_jpeg.jpg")    
-    watermark_png("sample_png.png", "Watermarking this PNG image", "output_png.png")
-    watermark_tiff("sample_tiff.tiff", "Watermarking this TIFF image", "output_tiff.tiff")
-    watermark_bmp("sample_bmp.bmp", "Watermarking this BMP image", "output_bmp.bmp")
-    watermark_mp3("sample_mp3.mp3", "Watermarking this audio", "output_mp3.mp3")
-    watermark_wav("sample_wav.wav", "Watermarking this audio", "output_wav.wav")
-    watermark_ogg("sample_ogg.ogg", "Watermarking this audio", "output_ogg.ogg")
-    watermark_video("sample_mp4.mp4", "Watermarking this video", "output_mp4.mp4")
+    watermark_pdf("tests/sample_pdf.pdf", "Watermarking this PDF image", "output_pdf.pdf")
+    watermark_jpeg("tests/sample_jpeg.jpg", "Watermarking this JPEG image", "output_jpeg.jpg")    
+    watermark_png("tests/sample_png.png", "Watermarking this PNG image", "output_png.png")
+    watermark_tiff("tests/sample_tiff.tiff", "Watermarking this TIFF image", "output_tiff.tiff")
+    watermark_bmp("tests/sample_bmp.bmp", "Watermarking this BMP image", "output_bmp.bmp")
+    watermark_mp3("tests/sample_mp3.mp3", "Watermarking this audio", "output_mp3.mp3")
+    watermark_wav("tests/sample_wav.wav", "Watermarking this audio", "output_wav.wav")
+    watermark_ogg("tests/sample_ogg.ogg", "Watermarking this audio", "output_ogg.ogg")
+    watermark_video("tests/sample_mp4.mp4", "Watermarking this video", "output_mp4.mp4")

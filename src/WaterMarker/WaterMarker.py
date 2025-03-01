@@ -8,7 +8,7 @@ import pypdfium2 as pdfium          #Used to extract pages from pdf files as ima
 from moviepy import editor as mpE   #Used to edit videos. This requires ImageMagick to be installed and path included in env variables.
 import pyttsx3                      #Used to create computer generated voice for watermarking audios
 from pydub import AudioSegment      #Used to overlay audio files
-import WaterMark
+from .WaterMark import WaterMark
 
 
 class WaterMarker():
@@ -35,7 +35,7 @@ class WaterMarker():
         #Get size of image
         img_width, img_height = img.shape[1], img.shape[0]
         
-        wm=WaterMark.WaterMark(img_width, img_height, text_to_write)
+        wm=WaterMark(img_width, img_height, text_to_write)
         
         
         #Create blank image with all zeros. Width is doubled for rotations
@@ -65,7 +65,6 @@ class WaterMarker():
         # Convert 0s to 1s and 1s to 0s to invert colors black and white for readability
         out=cv2.bitwise_not(blank)
         return out
-
    
     # Converts PNG image to watermarked image and returns Watermarked image
     def WaterMark_PNG(self, img: bytes, text_to_write: str) -> BytesIO:
@@ -97,7 +96,6 @@ class WaterMarker():
             return decode_image
         else:
             return img
-        
     
     # Converts TIFF image to watermarked image and returns Watermarked image
     def WaterMark_TIFF(self, img: bytes, text_to_write: str) -> BytesIO:
@@ -128,7 +126,6 @@ class WaterMarker():
             return decode_image
         else:
             return img
-        
     
     # Converts JPG image to watermarked image and returns Watermarked image
     def WaterMark_JPEG(self, img: bytes, text_to_write: str) -> BytesIO:
@@ -389,7 +386,6 @@ class WaterMarker():
                     with open(f.name,"rb") as retFile:
                         buffer = retFile.read()
                         return BytesIO(buffer)
-
 
     # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
     def WaterMark_MP3(self, audio: bytes, text_to_write: str) -> BytesIO:
