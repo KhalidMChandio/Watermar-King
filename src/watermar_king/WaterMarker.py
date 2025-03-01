@@ -9,7 +9,7 @@ from moviepy import editor as mpE   #Used to edit videos. This requires ImageMag
 import pyttsx3                      #Used to create computer generated voice for watermarking audios
 from pydub import AudioSegment      #Used to overlay audio files
 
-class WaterMark():
+class _waterMark():
     """
     Class to watermark images, PDFs, videos and audios.
     """
@@ -90,7 +90,7 @@ class WaterMarker():
         #Get size of image
         img_width, img_height = img.shape[1], img.shape[0]
         
-        wm=WaterMark(img_width, img_height, text_to_write)
+        wm=_waterMark(img_width, img_height, text_to_write)
         
         
         #Create blank image with all zeros. Width is doubled for rotations
