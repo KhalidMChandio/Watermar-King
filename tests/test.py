@@ -1,15 +1,15 @@
-from ..src.watermar_king.WaterMarker import WaterMarker
+
+from watermar_king import WaterMarker
 import  os
 
 
-def create_foler():
+def create_folder():
     if not os.path.exists("output"):
         os.makedirs("output")
 
-
 def watermark_pdf(img, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(img, "rb") as image:
         f = image.read()
@@ -20,8 +20,8 @@ def watermark_pdf(img, text_to_write, file_name):
     print("PDF file created")
 
 def watermark_jpeg(img, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(img, "rb") as image:
         f = image.read()
@@ -32,8 +32,8 @@ def watermark_jpeg(img, text_to_write, file_name):
     print("JPEG file created")
 
 def watermark_png(img, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(img, "rb") as image:
         f = image.read()
@@ -44,8 +44,8 @@ def watermark_png(img, text_to_write, file_name):
     print("PNG file created")
 
 def watermark_tiff(img, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(img, "rb") as image:
         f = image.read()
@@ -56,8 +56,8 @@ def watermark_tiff(img, text_to_write, file_name):
     print("TIFF file created")
 
 def watermark_bmp(img, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(img, "rb") as image:
         f = image.read()
@@ -68,8 +68,8 @@ def watermark_bmp(img, text_to_write, file_name):
     print("BMP file created")
 
 def watermark_video(video, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(video, "rb") as vid:
         f = vid.read()
@@ -80,37 +80,37 @@ def watermark_video(video, text_to_write, file_name):
     print("MP4 file created")
 
 def watermark_mp3(audio, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(audio, "rb") as vid:
         f = vid.read()
         b = bytearray(f)
-        out = wm.WaterMark_MP3(bytes(b), text_to_write=text_to_write)
+        out = wm.WaterMark_MP3(bytes(b), text_to_write=text_to_write, voice_index=28)
         with open(file_name, "wb") as f:
             f.write(out.getbuffer())
     print("MP3 file created")            
 
 def watermark_wav(audio, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(audio, "rb") as vid:
         f = vid.read()
         b = bytearray(f)
-        out = wm.WaterMark_WAV(bytes(b), text_to_write=text_to_write)
+        out = wm.WaterMark_WAV(bytes(b), text_to_write=text_to_write,voice_index=28)
         with open(file_name, "wb") as f:
             f.write(out.getbuffer())        
     print ("WAV file created")
 
 def watermark_ogg(audio, text_to_write, file_name):
-    wm = WaterMarker.WaterMarker()
-    create_foler()
+    wm = WaterMarker()
+    create_folder()
     file_name = os.path.join(os.getcwd(), "output", file_name) 
     with open(audio, "rb") as vid:
         f = vid.read()
         b = bytearray(f)
-        out = wm.WaterMark_OGG(bytes(b), text_to_write=text_to_write)
+        out = wm.WaterMark_OGG(bytes(b), text_to_write=text_to_write,voice_index=28)
         with open(file_name, "wb") as f:
             f.write(out.getbuffer())        
     print ("OGG file created")

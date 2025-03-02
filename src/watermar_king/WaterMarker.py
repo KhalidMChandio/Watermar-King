@@ -352,7 +352,7 @@ class WaterMarker():
         return BytesIO(ret.getvalue())
 
     # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
-    def WaterMark_WAV(self, audio: bytes, text_to_write: str) -> BytesIO:
+    def WaterMark_WAV(self, audio: bytes, text_to_write: str, voice_index: int=28) -> BytesIO:
         """
         Creates a wav file with text to speech, overlays it with original audio and returns overlayed file
 
@@ -366,13 +366,14 @@ class WaterMarker():
         engine = pyttsx3.init()
         rate = engine.getProperty('rate')
         engine.setProperty('rate', rate-100)
-        voices = engine.getProperty('voices') 
+        
         # Uncomment the following lines to see all the available voices
+        #voices = engine.getProperty('voices') 
         #for voice in voices: 
         #    print(f'voice: {voice.name}')
         
         # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
-        engine.setProperty('voice', voices[28].id)
+        engine.setProperty('voice', voice_index)
         # Save created clip as tempory file and load into audWM
         with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="Arch_") as wm:
             engine.save_to_file(text=text_to_write, filename=wm.name+".wav")
@@ -397,7 +398,7 @@ class WaterMarker():
                         buffer = retFile.read()
                         return BytesIO(buffer)
 
-    def WaterMark_OGG(self, audio: bytes, text_to_write: str) -> BytesIO:
+    def WaterMark_OGG(self, audio: bytes, text_to_write: str, voice_index: int=28) -> BytesIO:
         """
         Creates a wav file with text to speech, overlays it with original audio and returns overlayed file
 
@@ -417,7 +418,7 @@ class WaterMarker():
         #    print(f'voice: {voice.name}')
         
         # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
-        engine.setProperty('voice', voices[28].id)
+        engine.setProperty('voice', voice_index)
         # Save created clip as tempory file and load into audWM
         with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="Arch_") as wm:
             engine.save_to_file(text=text_to_write, filename=wm.name+".wav")
@@ -443,7 +444,7 @@ class WaterMarker():
                         return BytesIO(buffer)
 
     # This function uses pydub and ffmpeg. install ffmpeg and set environment variable to its bin folder
-    def WaterMark_MP3(self, audio: bytes, text_to_write: str) -> BytesIO:
+    def WaterMark_MP3(self, audio: bytes, text_to_write: str, voice_index: int=28) -> BytesIO:
         '''
         Function creates a wav file with text to speech, overlays it with original audio and returns overlayed file
 
@@ -461,7 +462,7 @@ class WaterMarker():
         #    print(f'voice: {voice.name}')
         
         # This function depends on the voices installed in the system and requires index of the installed voices; which may vary.
-        engine.setProperty('voice', voices[28].id)
+        engine.setProperty('voice', voice_index)
         # Save created clip as tempory file and load into audWM
         with tempfile.NamedTemporaryFile(mode="w", delete=False, prefix="Arch_") as wm:
             engine.save_to_file(text=text_to_write, filename=wm.name+".mp3")
