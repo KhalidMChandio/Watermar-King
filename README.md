@@ -1,5 +1,5 @@
 
-# WaterMarker
+# Watermar-King
 
 Watermark images (JPG, PNG, TIFF, BMP), PDFs, Video (MP4, AVI, OGV, WEBM) and even Audio(MP3, WAV, OGG) files.
 
